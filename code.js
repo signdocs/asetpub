@@ -57,11 +57,20 @@ function listLokasi() {
 function scanBend() {
     console.log("function scanBend");
 
-    let kamera = "<video id=\'preview\' width=\'25%\' height=\'10%\'></video>";
+    let kamera = "<video id=\'preview\' width=\'50%\' height=\'15%\'></video>";
+
+    kamera += "<div class=\'btn-group btn-group-toggle mb-5\' data-toggle=\'buttons\'>";
+    kamera += "<label class=\'btn btn-primary active\'>";
+    kamera += "<input type=\'radio\' name=\'options\' value=\'1\' autocomplete=\'off\'' checked> Front Camera";
+    kamera += "</label>";
+    kamera += "<label class=\'btn btn-secondary\'>";
+    kamera += "<input type=\'radio\' name=\'options\' value=\'2\' autocomplete=\'off\'> Back Camera";
+    kamera += "</label>";
+    kamera += "</div>";
 
     document.getElementById("kamera").innerHTML = kamera;
 
-    let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+    let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: false });
     scanner.addListener('scan', function (content) {
         document.getElementById("Notif-Body").innerHTML = "Hasil Scan : " + content;
         $("#Notif").modal("show");
@@ -72,13 +81,51 @@ function scanBend() {
 
     Instascan.Camera.getCameras().then(function (cameras) {
         if (cameras.length > 0) {
+            console.log(cameras);
             scanner.start(cameras[0]);
+            $("[name='options']").on('change', function () {
+                if ($(this).val() == 1) {
+                    console.log("kamera depan dipilih");
+                    if (cameras[0] != "") {
+                        console.log("ada kamera depan");
+                        scanner.start([0]);
+                    } else {
+                        console.log("tdk ada kamera depan");
+                        document.getElementById("Notif-Body").innerHTML = "Front Camera not found";
+                        $("#Notif").modal("show");
+                    };
+                } else if ($(this).val() == 2) {
+                    console.log("Kamera belakang dipilih");
+                    if (cameras[1] != "") {
+                        console.log("ada kamera belakang");
+                        scanner.start([1]);
+                    } else {
+                        console.log("tdk ada kamera belakang");
+                        document.getElementById("Notif-Body").innerHTML = "Back Camera not found";
+                        $("#Notif").modal("show");
+                    };
+                };
+            });
+
+
+
+            // let selectedCam = cameras[0];
+            // $.each(cameras, (i, c) => {
+            //     if (c.name.indexOf('back') != -1) {
+            //         selectedCam = c;
+            //         return false;
+            //     };
+            // });
+            // scanner.start(selectedCam);
+
         } else {
             console.error('no camera found');
         };
     }).catch(function (e) {
         console.error(e);
     });
+
+
 
 
     // refAset.orderByChild("Aset").limitToLast(1).once("value", function (snapX) {
