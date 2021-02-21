@@ -57,15 +57,15 @@ function listLokasi() {
 function scanBend() {
     console.log("function scanBend");
 
-    let kamera = "<video id=\'preview\' width=\'80%\' height=\'30%\'></video><br>";
+    let kamera = "<video id=\'preview\' width=\'50%\' height=\'20%\'></video><br>";
 
     // kamera += "<div class=\'btn-group btn-group-toggle mb-5\' data-toggle=\'buttons\'>";
     kamera += "<div class=\'btn-group btn-group-toggle mb-5\' data-toggle=\'buttons\'>";
     kamera += "<label class=\'btn btn-primary active\'>";
-    kamera += "<input type=\'radio\' name=\'options\' value=\'1\' autocomplete=\'off\'' checked> Front Camera";
+    kamera += "<input type=\'radio\' name=\'options\' value=\'1\' autocomplete=\'off\''> Front Camera";
     kamera += "</label>";
     kamera += "<label class=\'btn btn-secondary\'>";
-    kamera += "<input type=\'radio\' name=\'options\' value=\'2\' autocomplete=\'off\'> Back Camera";
+    kamera += "<input type=\'radio\' name=\'options\' value=\'2\' autocomplete=\'off\' checked> Back Camera";
     kamera += "</label>";
     kamera += "</div>";
 
@@ -83,7 +83,7 @@ function scanBend() {
     Instascan.Camera.getCameras().then(function (cameras) {
         if (cameras.length > 0) {
             console.log(cameras);
-            scanner.start(cameras[0]);
+            scanner.start(cameras[1]);
             $("[name='options']").on('change', function () {
                 if ($(this).val() == 1) {
                     console.log("kamera depan dipilih");
