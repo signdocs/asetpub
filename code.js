@@ -57,8 +57,9 @@ function listLokasi() {
 function scanBend() {
     console.log("function scanBend");
 
-    let kamera = "<video id=\'preview\' width=\'50%\' height=\'15%\'></video>";
+    let kamera = "<video id=\'preview\' width=\'80%\' height=\'30%\'></video><br>";
 
+    // kamera += "<div class=\'btn-group btn-group-toggle mb-5\' data-toggle=\'buttons\'>";
     kamera += "<div class=\'btn-group btn-group-toggle mb-5\' data-toggle=\'buttons\'>";
     kamera += "<label class=\'btn btn-primary active\'>";
     kamera += "<input type=\'radio\' name=\'options\' value=\'1\' autocomplete=\'off\'' checked> Front Camera";
